@@ -1,0 +1,88 @@
+
+.el-table__empty-block {
+  // border-bottom: 1px solid #ebeef5;
+  background: rgba(13, 26, 33, 0);
+}
+
+.el-table__fixed::before,
+.el-table__fixed-right::before {
+  height: 0;
+}
+
+.el-table::before {
+    height: 0px;
+}
+
+.el-table__header-wrapper tr th {
+  color: #6e7072;
+}
+
+.el-table__body-wrapper tr.el-table__row {
+  color: #2a2f37;
+}
+
+.el-table thead {
+  color: #6e7072;
+}
+
+.el-table {
+  background: none;
+  .el-table__header thead tr th {
+    background: rgba(24, 31, 35, 1);
+    border-top: 1px solid rgba(66, 70, 90, 1);
+    border-bottom: 1px solid rgba(66, 70, 90, 1)!important;
+  }
+
+  .el-table__header thead tr th:first-child {
+      border-left: 1px solid rgba(66, 70, 90, 1);
+  }
+
+  .el-table__header thead tr th:last-child {
+      border-right: 1px solid rgba(66, 70, 90, 1);
+  }
+
+  .el-table__body tbody tr td {
+    height: 40px;
+    padding: 0;
+    .cell {
+      word-break: break-word;
+    }
+  }
+
+  .el-table__body {
+    tbody {
+      tr {
+        &:not(:last-child) {
+          td {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.el-table__body-wrapper tr.el-table__row {
+  background: rgba(13, 26, 33, 1);
+  color: rgba(255, 255, 255, 1);
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+  background: rgba(13, 26, 33, 1);
+}
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background: rgba(32, 38, 42, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf {
+  border-bottom: none;
+}
+
+.el-table .cell {
+  padding: 0 20px;
+}
+
+.el-table th.el-table__cell>.cell {
+  padding: 0 20px;
+}
+

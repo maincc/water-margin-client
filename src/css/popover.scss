@@ -1,0 +1,13 @@
+.el-popover {
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  .popper__arrow {
+    display: none;
+  }
+}
+
+.el-popper[x-placement^="bottom"] .popper__arrow {
+  border-bottom-color: #dce0e3;
+}

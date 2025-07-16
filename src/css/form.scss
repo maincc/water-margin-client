@@ -1,0 +1,32 @@
+.el-form-item {
+  width: 100%;
+  .el-form-item__label {
+    width: 148px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(81, 86, 95, 1);
+  }
+  .el-form-item__content {
+    flex: 1;
+  }
+}
+
+#new-handicap {
+  .el-form-item {
+    .el-form-item__label {
+      width: 170px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 1);
+    }
+    .el-form-item__content {
+      .el-input__inner {
+        background: rgba(13, 26, 33, 1);
+        border: 1px solid rgba(66, 70, 90, 1);
+        border-radius: 6px;
+        font-size: 14px;
+        color: rgba(157, 169, 181, 1);
+      }
+    }
+  }
+}

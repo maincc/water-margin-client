@@ -1,0 +1,29 @@
+/* 修改分页组件样式 */
+.el-pagination.is-background .el-pager li {
+  background: transparent; /* 其他页码背景透明 */
+  border-radius: 0; /* 其他页码不显示圆形 */
+  color: #fff; /* 其他页码文字颜色（可选） */
+}
+
+/* 当前页码样式 */
+.el-pagination.is-background .el-pager li.active {
+  background: rgba(132, 132, 221, 1) !important;
+  border-radius: 50% !important;
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+/* 可选：修改上一页/下一页按钮样式 */
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .btn-next {
+  background: transparent; /* 背景透明 */
+  color: #fff; /* 文字颜色（可选） */
+}
+
+.el-pagination__total {
+  font-size: 14px;
+  color: rgba(151, 159, 170, 1);
+}

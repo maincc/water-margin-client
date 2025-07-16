@@ -1,0 +1,22 @@
+.el-input__inner {
+  border: 1px solid rgba(232, 233, 234, 1);
+  border-radius: 6px;
+}
+
+input[type="text"] {
+  text-indent: 0px;
+}
+
+#input-append {
+  .el-input__inner {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  .el-input-group__append {
+    color: rgba(255, 255, 255, 1);
+    background: rgba(13, 26, 33, 1);
+    border: 1px solid rgba(66, 70, 90, 1);
+    border-left: none;
+    padding: 0px;
+  }
+}

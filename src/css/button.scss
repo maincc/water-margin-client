@@ -1,0 +1,48 @@
+.el-button {
+  padding: 0px;
+  border: none;
+  background: none;
+  &:hover {
+    background: none;
+  }
+  &:focus {
+    background: none;
+  }
+}
+
+#showWalletList {
+  .el-button {
+    &:hover {
+      border-radius: 6px;
+      background: rgba(150, 150, 235, 1);
+      color: rgba(255, 255, 255, 1);
+    }
+    &:focus {
+      border-radius: 6px;
+      background: rgba(150, 150, 235, 1);
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+#add-user, #modify-user, #add-token, #modify-token, #add-chain, #modify-chain, #add-exchange, #modify-exchange, #new-handicap {
+  .el-button--primary.is-disabled {
+    border: none;
+    background: rgba(132, 132, 221, 0.7);
+  }
+  .el-button--primary {
+    border: none;
+    background: rgba(132, 132, 221, 1);
+  }
+}
+
+#add-trading-pair {
+  .el-button--primary.is-disabled {
+    border: none;
+    background: rgba(6, 166, 138, 0.7);
+  }
+  .el-button--primary {
+    border: none;
+    background: rgba(6, 166, 138, 1);
+  }
+}
