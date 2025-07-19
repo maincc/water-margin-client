@@ -12,7 +12,13 @@
       </el-button>
     </div>
     <div class="view-content" style="margin-top: 20px">
-      <el-table :data="tableExchanges" style="width: 100%" stripe>
+      <el-table
+        v-loading="tableLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        :data="tableExchanges"
+        style="width: 100%"
+        stripe
+      >
         <el-table-column prop="name" :label="$t('message.exchangeInfo.name')">
         </el-table-column>
         <el-table-column
@@ -110,6 +116,7 @@ export default {
       exchanges: [],
       page: PAGE,
       size: SIZE,
+      tableLoading: false,
     };
   },
   async mounted() {
@@ -151,7 +158,7 @@ export default {
           const res = await modifyExchange(
             this.userInfo.address,
             info._id,
-            data
+            Object.assign({}, data, { _id: undefined })
           );
           if (res.isSuccess()) {
             this.$message.success(
@@ -209,6 +216,7 @@ export default {
       this.$router.push("/exchangeManage/detail/" + info._id);
     },
     async fetchExchangeList() {
+      this.tableLoading = true;
       try {
         const { address, role } = this.userInfo;
         const res = await fetchExchangeList(address);
@@ -219,6 +227,8 @@ export default {
         }
       } catch (error) {
         this.$message.error(error.message);
+      } finally {
+        this.tableLoading = false;
       }
     },
     async pageChange(page) {

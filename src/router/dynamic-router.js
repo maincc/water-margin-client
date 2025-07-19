@@ -17,7 +17,17 @@ const dynamicRouter = (info) => {
     const userRouter = _.cloneDeep(common);
     const userModules = modules.filter((m) => {
       if (m.module) {
-        return !!info.modules.find((im) => im.module == m.module);
+        return !!info.modules.find((im) => {
+          if (im.module == m.module) {
+            if (m.meta.needWrite) {
+              return im.auth.indexOf("w") > -1;
+            } else {
+              return true;
+            }
+          } else {
+            return false;
+          }
+        });
       } else {
         return false;
       }

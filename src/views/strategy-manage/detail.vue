@@ -1,5 +1,5 @@
 <template>
-  <div class="strategy-detail">
+  <div class="strategy-detail" ref="strategyDetail">
     <div class="view-top">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/strategyManage/strategyList' }">
@@ -19,20 +19,22 @@
         <span style="margin-left: 20px"
           >{{ $t("message.strategyInfo.name") }}: {{ info.name }}</span
         >
-        <el-button
-          v-if="!info.isActive"
-          @click="strategyActivate"
-          class="active-btn common-btn"
-          style="margin-right: 20px"
-          >{{ $t("message.strategyDetail.strategyActiving") }}</el-button
-        >
-        <el-button
-          v-else
-          @click="strategyBan"
-          class="ban-btn common-btn"
-          style="margin-right: 20px"
-          >{{ $t("message.strategyDetail.strategyBan") }}</el-button
-        >
+        <div v-if="isAuthWrite">
+          <el-button
+            v-if="!info.isActive"
+            @click="strategyActivate"
+            class="active-btn common-btn"
+            style="margin-right: 20px"
+            >{{ $t("message.strategyDetail.strategyActiving") }}</el-button
+          >
+          <el-button
+            v-else
+            @click="strategyBan"
+            class="ban-btn common-btn"
+            style="margin-right: 20px"
+            >{{ $t("message.strategyDetail.strategyBan") }}</el-button
+          >
+        </div>
       </div>
       <div class="info">
         <div class="info-item">
@@ -85,6 +87,14 @@
             </div>
           </div>
           <div class="info-item" style="margin-top: 14px">
+            <div class="info-left">
+              {{ $t("message.strategyDetail.stragegyExecFrequency") }}
+            </div>
+            <div class="info-right">
+              {{ info.params.cron }}
+            </div>
+          </div>
+          <div class="info-item">
             <div class="info-left">
               {{ $t("message.strategyDetail.pairExecInterval") }}
             </div>
@@ -202,12 +212,18 @@ import { fetchStrategyById, updateStrategy } from "@/js/api/v1/strategy";
 import ExplainButton from "@/components/explain-button";
 import strategyActivateDialog from "@/components/strategy-activate";
 import strategyBanDialog from "@/components/strategy-ban";
+import { Loading } from "element-ui";
 
 export default {
   name: "StrategyDetail",
   beforeRouteEnter(to, from, next) {
     const { id } = to.params;
     next(async (vm) => {
+      const inst = Loading.service({
+        fullscreen: false,
+        target: vm.$refs.strategyDetail,
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       try {
         const res = await fetchStrategyById(vm.userInfo.address, id);
         if (res.isSuccess()) {
@@ -218,13 +234,25 @@ export default {
       } catch (error) {
         vm.$message.error(error.message || error);
         vm.$router.push("/strategyManage/strategyList");
+      } finally {
+        inst.close();
       }
     });
   },
   data() {
     return {
+      currentModule: "strategy",
+      isAuthWrite: true,
       info: {},
     };
+  },
+  async mounted() {
+    if (this.userInfo.modules) {
+      const auth = this.userInfo.modules.find(
+        (m) => m.module == this.currentModule
+      ).auth;
+      this.isAuthWrite = auth.indexOf("w") > -1;
+    }
   },
   components: {
     ExplainButton,
@@ -244,12 +272,15 @@ export default {
   methods: {
     strategyBan() {
       strategyBanDialog().show(async () => {
-        this.info.isActive = false;
+        const data = Object.assign({}, this.info, {
+          isActive: false,
+          _id: undefined,
+        });
         try {
           const res = await updateStrategy(
             this.userInfo.address,
             this.info._id,
-            this.info
+            data
           );
           if (res.isSuccess()) {
             this.$message.success(this.$t("message.strategyBan.banSuccess"));
@@ -270,12 +301,15 @@ export default {
     },
     strategyActivate() {
       strategyActivateDialog().show(async () => {
-        this.info.isActive = true;
+        const data = Object.assign({}, this.info, {
+          isActive: true,
+          _id: undefined,
+        });
         try {
           const res = await updateStrategy(
             this.userInfo.address,
             this.info._id,
-            this.info
+            data
           );
           if (res.isSuccess()) {
             this.$message.success(

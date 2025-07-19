@@ -12,7 +12,13 @@
       </el-button>
     </div>
     <div class="view-content" style="margin-top: 20px">
-      <el-table :data="tableChains" style="width: 100%" stripe>
+      <el-table
+        v-loading="tableLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        :data="tableChains"
+        style="width: 100%"
+        stripe
+      >
         <el-table-column prop="name" :label="$t('message.chainInfo.name')">
           <template slot-scope="scope">
             <div style="display: flex; align-items: center">
@@ -102,6 +108,7 @@ export default {
       page: PAGE,
       size: SIZE,
       chains: [],
+      tableLoading: false,
     };
   },
   async mounted() {
@@ -187,6 +194,7 @@ export default {
       });
     },
     async fetchChainList() {
+      this.tableLoading = true;
       try {
         const { address, role } = this.userInfo;
         const res = await fetchChainList(address);
@@ -197,6 +205,8 @@ export default {
         }
       } catch (error) {
         this.$message.error(error.message);
+      } finally {
+        this.tableLoading = false;
       }
     },
     showChainLogo(str) {

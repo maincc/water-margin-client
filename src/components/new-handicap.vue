@@ -553,7 +553,6 @@ export default {
             pairs: pairs.map((pair) => pair.join("/")).join(","),
           },
         });
-        console.log(data);
         const createRes = await createStrategy(this.userInfo.address, data);
         if (createRes.isSuccess()) {
           this.$message.success(this.$t("message.newStrategy.createSuccess"));

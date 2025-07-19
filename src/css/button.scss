@@ -25,7 +25,8 @@
   }
 }
 
-#add-user, #modify-user, #add-token, #modify-token, #add-chain, #modify-chain, #add-exchange, #modify-exchange, #new-handicap {
+#add-user, #modify-user, #add-token, #modify-token, #add-chain, #new-project,
+#modify-chain, #add-exchange, #modify-exchange, #new-handicap, #cancel-order {
   .el-button--primary.is-disabled {
     border: none;
     background: rgba(132, 132, 221, 0.7);
@@ -36,7 +37,7 @@
   }
 }
 
-#add-trading-pair {
+#add-trading-pair, #create-order-sell {
   .el-button--primary.is-disabled {
     border: none;
     background: rgba(6, 166, 138, 0.7);
@@ -44,5 +45,16 @@
   .el-button--primary {
     border: none;
     background: rgba(6, 166, 138, 1);
+  }
+}
+
+#create-order-buy {  
+  .el-button--primary.is-disabled {
+    border: none;
+    background: rgba(216, 64, 92, 0.7);
+  }
+  .el-button--primary {
+    border: none;
+    background: rgba(216, 64, 92, 1);
   }
 }

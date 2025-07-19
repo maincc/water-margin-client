@@ -20,3 +20,25 @@ input[type="text"] {
     padding: 0px;
   }
 }
+
+#input-append-white {
+  .el-input__inner {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+  .el-input-group__append {
+    color: rgba(157, 169, 181, 1);
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(232, 233, 234, 1);
+    border-left: none;
+    padding: 0px;
+  }
+}
+
+#new-project {
+  .el-input__inner {
+    border-radius: 6px;
+    background: rgba(13, 26, 33, 1);
+    border: 1px solid rgba(66, 70, 90, 1);
+  }
+}

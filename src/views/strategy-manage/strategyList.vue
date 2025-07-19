@@ -46,7 +46,13 @@
       </div>
     </div>
     <div class="view-content" style="margin-top: 20px">
-      <el-table :data="strategyList" style="width: 100%" stripe>
+      <el-table
+        v-loading="tableLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        :data="strategyList"
+        style="width: 100%"
+        stripe
+      >
         <el-table-column
           type="index"
           :index="formatIndex"
@@ -88,7 +94,7 @@
         <el-table-column
           align="center"
           :label="$t('message.operation')"
-          :width="70"
+          :width="100"
         >
           <template slot-scope="scope">
             <div
@@ -98,6 +104,14 @@
                 align-items: center;
               "
             >
+              <div style="width: 28px" v-if="!isAuthWrite">- -</div>
+              <el-button
+                @click="modifyStrategy(scope.row)"
+                v-else
+                type="text"
+                style="color: rgba(177, 177, 255, 1)"
+                >{{ $t("message.modify") }}</el-button
+              >
               <el-button
                 @click="toDetail(scope.row)"
                 type="text"
@@ -126,7 +140,7 @@
 </template>
 
 <script>
-import { fetchStrategyList } from "@/js/api/v1/strategy";
+import { fetchStrategyList, updateStrategy } from "@/js/api/v1/strategy";
 import { PAGE, SIZE } from "@/js/constant";
 import { mapGetters } from "vuex";
 import EmptyTableContent from "@/components/empty-table-content";
@@ -134,11 +148,14 @@ import {
   strategyTypeOptions,
   strategyStatusOptions,
 } from "@/js/constant/strategy";
+import modifyStrategyDialog from "@/components/modify-strategy";
 
 export default {
   name: "strategyList",
   data() {
     return {
+      currentModule: "token",
+      isAuthWrite: true,
       page: PAGE,
       size: SIZE,
       strategyList: [],
@@ -149,9 +166,16 @@ export default {
         type: "",
         isActive: "",
       },
+      tableLoading: false,
     };
   },
   async mounted() {
+    if (this.userInfo.modules) {
+      const auth = this.userInfo.modules.find(
+        (m) => m.module == this.currentModule
+      ).auth;
+      this.isAuthWrite = auth.indexOf("w") > -1;
+    }
     await this.fetchStrategyList();
   },
   components: {
@@ -161,6 +185,27 @@ export default {
     ...mapGetters(["userInfo", "allChains"]),
   },
   methods: {
+    modifyStrategy(info) {
+      modifyStrategyDialog().show(info, async (data) => {
+        try {
+          const res = await updateStrategy(
+            this.userInfo.address,
+            info._id,
+            data
+          );
+          if (res.isSuccess()) {
+            this.$message.success(
+              this.$t("message.modifyStrategy.modifySuccess")
+            );
+            await this.fetchStrategyList();
+          } else {
+            this.$message.error(res.message);
+          }
+        } catch (error) {
+          this.$message.error(error.message);
+        }
+      });
+    },
     async handleSearch() {
       await this.fetchStrategyList();
     },
@@ -189,6 +234,7 @@ export default {
       }
     },
     async fetchStrategyList() {
+      this.tableLoading = true;
       try {
         const { address, role } = this.userInfo;
         const res = await fetchStrategyList(
@@ -205,6 +251,8 @@ export default {
         }
       } catch (error) {
         this.$message.error(error.message);
+      } finally {
+        this.tableLoading = false;
       }
     },
     formatIndex(index) {

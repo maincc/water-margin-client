@@ -12,7 +12,13 @@
       </el-button>
     </div>
     <div class="view-content" style="margin-top: 20px">
-      <el-table :data="accounts" style="width: 100%" stripe>
+      <el-table
+        v-loading="tableLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        :data="accounts"
+        style="width: 100%"
+        stripe
+      >
         <el-table-column
           prop="role"
           :label="$t('message.userInfo.role')"
@@ -129,6 +135,7 @@ export default {
       accounts: [],
       count: 0,
       currentAccount: "",
+      tableLoading: false,
     };
   },
   async mounted() {
@@ -212,6 +219,7 @@ export default {
       }
     },
     async fetchUserList() {
+      this.tableLoading = true;
       try {
         const { address, role } = this.userInfo;
         const res = await fetchUserList(address, this.page, this.size);
@@ -223,6 +231,8 @@ export default {
         }
       } catch (error) {
         this.$message.error(error.message);
+      } finally {
+        this.tableLoading = false;
       }
     },
   },
