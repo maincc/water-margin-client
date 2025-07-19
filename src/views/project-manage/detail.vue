@@ -128,11 +128,11 @@
               <span>{{ zhStatus(scope.row.status) }}</span>
               <el-tooltip
                 style="margin-left: 10px; cursor: pointer"
-                v-if="scope.row.status == 'failed'"
+                v-if="scope.row.status == 'failed' && scope.row.msg"
                 class="item"
                 effect="dark"
                 offset="20"
-                :content="$t('message.projectTask.failTip')"
+                :content="scope.row.msg"
                 placement="top"
               >
                 <img src="@/assets/fail-explain.svg" alt="" srcset="" />

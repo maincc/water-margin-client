@@ -40,13 +40,13 @@
             popper-class="minimal-token-select"
             :popper-append-to-body="false"
             @change="
-              form.baseId = allTokens.find(
+              form.baseId = selectTokens.find(
                 (item) => item.symbol === form.base
               )._id
             "
           >
             <el-option
-              v-for="item in allTokens"
+              v-for="item in selectTokens"
               :key="item._id"
               :label="item.symbol"
               :value="item.symbol"
@@ -61,13 +61,13 @@
             popper-class="minimal-token-select"
             :popper-append-to-body="false"
             @change="
-              form.counterId = allTokens.find(
+              form.counterId = selectTokens.find(
                 (item) => item.symbol === form.counter
               )._id
             "
           >
             <el-option
-              v-for="item in allTokens"
+              v-for="item in selectTokens"
               :key="item._id"
               :label="item.symbol"
               :value="item.symbol"
@@ -217,8 +217,17 @@ export default {
         baseId != counterId
       );
     },
+    selectTokens() {
+      return this.sortBySymbol(this.allTokens);
+    },
   },
-  methods: {},
+  methods: {
+    sortBySymbol(array) {
+      const sortedArray = [...array];
+      sortedArray.sort((a, b) => a.symbol.localeCompare(b.symbol));
+      return sortedArray.filter((item) => item.isNative);
+    },
+  },
 };
 </script>
 

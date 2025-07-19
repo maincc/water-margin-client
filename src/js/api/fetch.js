@@ -7,7 +7,7 @@ import { i18n } from "../render";
 
 const service = axios.create({
   // baseURL: "http://192.168.78.100:3000",
-  baseURL: "http://127.0.0.1:3000",
+  baseURL: "http://192.168.78.101:3000",
 });
 
 /**
@@ -47,8 +47,6 @@ service.interceptors.request.use(
           throw new Error(i18n.t("message.pleaseDownloadCcdaoPlugin"));
         }
       } catch (error) {
-        router.push("/welcome");
-        Message.error(error.message);
         return Promise.reject(error);
       }
     }

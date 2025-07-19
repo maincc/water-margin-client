@@ -117,7 +117,7 @@ export default {
   name: "projectList",
   data() {
     return {
-      currentModule: "token",
+      currentModule: "project",
       isAuthWrite: true,
       page: PAGE,
       size: SIZE,

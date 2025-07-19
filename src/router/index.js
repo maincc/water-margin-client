@@ -51,10 +51,10 @@ export const getInfo = async () => {
       const addresses = await ethereum.request({
         method: "swtc_requestAccounts",
       });
+      store.dispatch("setCurrentAddress", addresses[0]);
       if (addresses.length > 0) {
         info = await fetchAddressInfo(addresses[0]);
         if (info) {
-          store.dispatch("setCurrentAddress", addresses[0]);
           store.dispatch("setUserInfo", info);
           router.addRoute(...dynamicRouter(info));
         }
