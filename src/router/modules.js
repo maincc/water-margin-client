@@ -28,6 +28,7 @@ const routers = [
   {
     path: "/strategyManage/newStrategy",
     name: "NewStrategy",
+    module: "strategy",
     component: _import("strategy-manage/newStrategy"),
     meta: {
       showMenu: true,
@@ -38,11 +39,13 @@ const routers = [
       parentIcon: require("@/assets/menus/strategy-manage.svg"),
       subIcon: require("@/assets/menus/subMenus/new.svg"),
       subIconSelected: require("@/assets/menus/subMenus/new-selected.svg"),
+      needWrite: true, // 需要写权限
     },
   },
   {
     path: "/strategyManage/strategyList",
     name: "StrategyList",
+    module: "strategy",
     component: _import("strategy-manage/strategyList"),
     meta: {
       showMenu: true,
@@ -58,6 +61,7 @@ const routers = [
   {
     path: "/strategyManage/detail/:id",
     name: "strategyDetail",
+    module: "strategy",
     component: _import("strategy-manage/detail"),
     meta: {
       belongMenu: "StrategyList",
@@ -67,6 +71,7 @@ const routers = [
   {
     path: "/projectManage/newProject",
     name: "NewProject",
+    module: "project",
     component: _import("project-manage/newProject"),
     meta: {
       showMenu: true,
@@ -77,11 +82,13 @@ const routers = [
       parentIcon: require("@/assets/menus/project-manage.svg"),
       subIcon: require("@/assets/menus/subMenus/new.svg"),
       subIconSelected: require("@/assets/menus/subMenus/new-selected.svg"),
+      needWrite: true, // 需要写权限
     },
   },
   {
     path: "/projectManage/projectList",
     name: "ProjectList",
+    module: "project",
     component: _import("project-manage/projectList"),
     meta: {
       showMenu: true,
@@ -92,6 +99,16 @@ const routers = [
       parentIcon: require("@/assets/menus/project-manage.svg"),
       subIcon: require("@/assets/menus/subMenus/list.svg"),
       subIconSelected: require("@/assets/menus/subMenus/list-selected.svg"),
+    },
+  },
+  {
+    path: "/projectManage/detail/:id",
+    name: "projectDetail",
+    module: "project",
+    component: _import("project-manage/detail"),
+    meta: {
+      belongMenu: "ProjectList",
+      parentMenu: "ProjectManage",
     },
   },
 
@@ -120,6 +137,7 @@ const routers = [
   {
     path: "/exchangeManage/detail/:id",
     name: "exchangeDetail",
+    module: "exchange",
     component: _import("exchange-manage/detail"),
     meta: {
       belongMenu: "exchangeManage",

@@ -1,9 +1,9 @@
 <template>
-  <el-col slot="empty" style="margin-top: 120px">
+  <el-col slot="empty" style="margin-top: 80px">
     <el-col style="line-height: 1">
       <img src="@/assets/empty-content.svg" />
     </el-col>
-    <el-col style="line-height: 20px; margin-top: 16px">
+    <el-col style="line-height: 20px; margin-top: 16px; margin-bottom: 70px">
       <span
         >{{ $t("message.empty_content") }}
         <slot></slot>

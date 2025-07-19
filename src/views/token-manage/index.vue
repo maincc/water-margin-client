@@ -12,7 +12,13 @@
       </el-button>
     </div>
     <div class="view-content" style="margin-top: 20px">
-      <el-table :data="tokens" style="width: 100%" stripe>
+      <el-table
+        v-loading="tableLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+        :data="tokens"
+        style="width: 100%"
+        stripe
+      >
         <el-table-column
           prop="symbol"
           :label="$t('message.tokenManage.token')"
@@ -142,6 +148,7 @@ export default {
       size: SIZE,
       tokens: [],
       count: 0,
+      tableLoading: false,
     };
   },
   async mounted() {
@@ -214,6 +221,7 @@ export default {
       await this.fetchTokenList();
     },
     async fetchTokenList() {
+      this.tableLoading = true;
       try {
         const { address, role } = this.userInfo;
         const res = await fetchTokenList(address, this.page, this.size);
@@ -225,6 +233,8 @@ export default {
         }
       } catch (error) {
         this.$message.error(error.message);
+      } finally {
+        this.tableLoading = false;
       }
     },
     showTokenLogo(str) {

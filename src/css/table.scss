@@ -41,6 +41,16 @@
       border-right: 1px solid rgba(66, 70, 90, 1);
   }
 
+  .el-table__body tbody tr td:first-child {
+      border-left: 1px solid rgba(66, 70, 90, 1);
+  }
+  .el-table__body tbody tr td:last-child {
+      border-right: 1px solid rgba(66, 70, 90, 1);
+  }
+  .el-table__body tbody tr:last-child td {
+      border-bottom: 1px solid rgba(66, 70, 90, 1);
+  }
+
   .el-table__body tbody tr td {
     height: 40px;
     padding: 0;
@@ -84,5 +94,26 @@
 
 .el-table th.el-table__cell>.cell {
   padding: 0 20px;
+}
+
+#project-detail {
+  .el-table .cell {
+    padding: 0 10px;
+    .el-table__expand-icon {
+      font-size: 14px;
+      font-weight: 600;
+      color: #AEAFB5
+    }
+    .el-table__expand-icon--expanded {
+      color: #B1B1FF !important;
+    }
+  }
+  .el-table, .el-table__expanded-cell {
+    background: rgba(24, 31, 35, 1) !important;
+  }
+
+  .el-table th.el-table__cell>.cell {
+    padding: 0 10px;
+  } 
 }
 

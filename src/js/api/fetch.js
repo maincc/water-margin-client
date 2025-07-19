@@ -1,11 +1,13 @@
 import axios from "axios";
 import Response from "./response/";
 import ApiError from "./response/api-error";
-import { test_sign, test_getPK, test_verify } from "@/js/plugin-demo";
+import router from "@/router";
+import { Message } from "element-ui";
+import { i18n } from "../render";
 
 const service = axios.create({
-  // baseURL: "http://192.168.78.101:3000",
-  baseURL: "http://127.0.0.1:3000",
+  // baseURL: "http://192.168.78.100:3000",
+  baseURL: "http://192.168.78.101:3000",
 });
 
 /**
@@ -25,15 +27,28 @@ const fetchToken = async (address) => {
 service.interceptors.request.use(
   async (config) => {
     if (config.tk) {
-      console.log(window.ccdao);
-      const token = await fetchToken(config.signer);
-      const signature = await test_sign(token);
-      const publicKey = await test_getPK();
-      config.headers = Object.assign({}, config.headers, {
-        "x-tk": token,
-        "x-sd": signature,
-        "x-pk": publicKey,
-      });
+      try {
+        const token = await fetchToken(config.signer);
+        if (window.ccdao) {
+          const signature = await window.ccdao.request({
+            method: "swtc_signMessage",
+            params: [config.signer, token],
+          });
+          const publicKey = await window.ccdao.request({
+            method: "swtc_getPublicKey",
+            params: [config.signer],
+          });
+          config.headers = Object.assign({}, config.headers, {
+            "x-tk": token,
+            "x-sd": signature,
+            "x-pk": publicKey,
+          });
+        } else {
+          throw new Error(i18n.t("message.pleaseDownloadCcdaoPlugin"));
+        }
+      } catch (error) {
+        return Promise.reject(error);
+      }
     }
     return config;
   },

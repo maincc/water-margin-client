@@ -6,6 +6,7 @@ import { Message } from "element-ui";
 import _import from "./import-component";
 import dynamicRouter from "./dynamic-router";
 import { Loading } from "element-ui";
+import { i18n } from "@/js/render";
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err);
@@ -42,15 +43,18 @@ export const getInfo = async () => {
   let info = null;
   const ethereum = window.ccdao;
   if (ethereum) {
-    const inst = Loading.service({ fullscreen: true });
+    const inst = Loading.service({
+      fullscreen: true,
+      text: i18n.t("message.getPluginAddress"),
+    });
     try {
       const addresses = await ethereum.request({
         method: "swtc_requestAccounts",
       });
+      store.dispatch("setCurrentAddress", addresses[0]);
       if (addresses.length > 0) {
         info = await fetchAddressInfo(addresses[0]);
         if (info) {
-          store.dispatch("setCurrentAddress", addresses[0]);
           store.dispatch("setUserInfo", info);
           router.addRoute(...dynamicRouter(info));
         }
@@ -92,8 +96,9 @@ router.beforeEach(async (to, from, next) => {
     } else {
       info = await getInfo();
       const routers = router.getRoutes();
-      // const nextTo = routers.find(r => {r.path == to.path});
-      const nextTo = to;
+      const nextTo = routers.find((r) => {
+        r.path == to.path;
+      });
       if (info) {
         if (nextTo) {
           next(nextTo.path);

@@ -1,5 +1,5 @@
 <template>
-  <div class="exchange-detail">
+  <div class="exchange-detail" ref="exchangeDetail">
     <div class="view-top">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/exchangeManage' }">
@@ -67,12 +67,18 @@
 <script>
 import { mapGetters } from "vuex";
 import { fetchExchangeById } from "@/js/api/v1/exchange";
+import { Loading } from "element-ui";
 
 export default {
   name: "ExchangeDetail",
   beforeRouteEnter(to, from, next) {
     const { id } = to.params;
     next(async (vm) => {
+      const inst = Loading.service({
+        fullscreen: false,
+        target: vm.$refs.exchangeDetail,
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       try {
         const res = await fetchExchangeById(vm.userInfo.address, id);
         if (res.isSuccess()) {
@@ -83,6 +89,8 @@ export default {
       } catch (error) {
         vm.$message.error(error.message || error);
         vm.$router.push("/exchangeManage");
+      } finally {
+        inst.close();
       }
     });
   },

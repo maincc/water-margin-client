@@ -92,7 +92,7 @@ export default {
     sortBySymbol(array) {
       const sortedArray = [...array];
       sortedArray.sort((a, b) => a.symbol.localeCompare(b.symbol));
-      return sortedArray;
+      return sortedArray.filter((item) => item.isNative);
     },
     show(fun) {
       this.fun = fun;
