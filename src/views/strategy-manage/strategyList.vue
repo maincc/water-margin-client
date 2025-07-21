@@ -170,15 +170,11 @@ export default {
     };
   },
   async mounted() {
-    console.log(this.userInfo.modules);
     if (this.userInfo.modules) {
       const auth = this.userInfo.modules.find((m) => {
-        console.log(m.module, this.currentModule);
         return m.module == this.currentModule;
       }).auth;
-      console.log(auth);
       this.isAuthWrite = auth.indexOf("w") > -1;
-      console.log(this.isAuthWrite);
     }
     await this.fetchStrategyList();
   },
