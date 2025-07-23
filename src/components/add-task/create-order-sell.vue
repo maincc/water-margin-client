@@ -226,7 +226,7 @@ export default {
     sortBySymbol(array) {
       const sortedArray = [...array];
       sortedArray.sort((a, b) => a.symbol.localeCompare(b.symbol));
-      return sortedArray.filter((item) => item.isNative);
+      return sortedArray;
     },
   },
 };
