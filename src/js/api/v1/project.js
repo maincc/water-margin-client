@@ -49,3 +49,19 @@ export const createProject = async (address, data) => {
   });
   return res;
 };
+
+/**
+ * 更新项目
+ *
+ * @returns
+ */
+export const updateProject = async (address, id, data) => {
+  const res = await fetch({
+    url: "/v1/api/project/update/one/" + id,
+    method: "patch",
+    tk: true,
+    signer: address,
+    data: data,
+  });
+  return res;
+};

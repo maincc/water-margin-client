@@ -21,7 +21,7 @@
       </div>
       <div class="right">
         <img
-          style="width: 100%; position: absolute; top: 0; right: 0"
+          style="width: 100%; position: absolute; top: 10%; right: 160px"
           src="@/assets/index-right.svg"
           alt=""
         />

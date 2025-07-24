@@ -17,5 +17,6 @@ import "@/css/checkbox.scss";
 import "@/css/radio.scss";
 import "@/css/select.scss";
 import "@/css/tooltip.scss";
+import "@/css/dialog.scss";
 
 createRoot({ store, router, root: App });

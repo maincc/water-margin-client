@@ -16,7 +16,14 @@
     </div>
     <div class="project-info">
       <div class="info-top">
-        <span>{{ $t("message.projectInfo.name") }}: {{ info.name }}</span>
+        <div style="display: flex; align-items: center; height: 30px">
+          {{ $t("message.projectInfo.name") }}: {{ info.name }}
+        </div>
+        <div v-if="info.status == 'failed'">
+          <el-button @click="updateStatus()" class="handled-btn">{{
+            $t("message.projectInfo.handled")
+          }}</el-button>
+        </div>
       </div>
       <div class="info-content">
         <div class="info-content-left">
@@ -256,11 +263,12 @@
 </template>
 
 <script>
-import { fetchProjectById } from "@/js/api/v1/project";
+import { fetchProjectById, updateProject } from "@/js/api/v1/project";
 import { PAGE, SIZE } from "@/js/constant";
 import { mapGetters } from "vuex";
 import EmptyTableContent from "@/components/empty-table-content";
 import { Loading } from "element-ui";
+import updateProjectStatus from "@/components/update-project-status";
 
 export default {
   name: "projectDetail",
@@ -273,6 +281,7 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       try {
+        vm.id = id;
         const res = await fetchProjectById(vm.userInfo.address, id);
         if (res.isSuccess()) {
           vm.info = res.data;
@@ -292,6 +301,7 @@ export default {
       info: {},
       page: PAGE,
       size: SIZE,
+      id: null,
     };
   },
   computed: {
@@ -313,6 +323,34 @@ export default {
     EmptyTableContent,
   },
   methods: {
+    updateStatus() {
+      updateProjectStatus().show(async () => {
+        const inst = Loading.service({
+          fullscreen: false,
+          target: this.$refs.projectDetail,
+          background: "rgba(0, 0, 0, 0.7)",
+        });
+        try {
+          const res = updateProject(this.userInfo.address, this.id, {
+            status: "handled",
+          });
+          if (res.isSuccess() || res.code == 0) {
+            this.$message.success(this.$t("message.modifyChain.modifySuccess"));
+            const infoRes = await fetchProjectById(
+              this.userInfo.address,
+              this.id
+            );
+            this.info = infoRes.data;
+          } else {
+            this.$message.error(res.message || res);
+          }
+        } catch (error) {
+          this.$message.error(error.message || error);
+        } finally {
+          inst.close();
+        }
+      });
+    },
     async pageChange(page) {
       this.page = page;
     },
@@ -429,13 +467,21 @@ export default {
     background: rgba(24, 31, 35, 1);
     .info-top {
       display: flex;
-      padding: 15px 20px;
+      justify-content: space-between;
+      padding: 10px 20px;
       border-bottom: 1px solid rgba(66, 70, 90, 1);
       font-size: 14px;
       font-weight: 400;
       letter-spacing: -0.04px;
-      line-height: 19.6px;
       color: rgba(255, 255, 255, 1);
+      .handled-btn {
+        width: 100px;
+        height: 30px;
+        border-radius: 20px;
+        border: 1px solid rgba(32, 166, 150, 1);
+        color: rgba(0, 208, 183, 1);
+        font-size: 14px;
+      }
     }
     .info-content {
       padding: 20px;
