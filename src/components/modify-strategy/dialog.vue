@@ -148,7 +148,7 @@
                 </el-button>
                 <div v-if="info.params.pairs.length > 0" class="show-pairs-div">
                   <div
-                    v-for="(item, index) in info.params.pairs"
+                    v-for="(item, index) in info.params.pairs.slice(0, 3)"
                     :key="index"
                     class="pair-item"
                   >
@@ -172,9 +172,24 @@
                       srcset=""
                     />
                   </div>
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      width: 42px;
+                      cursor: pointer;
+                    "
+                    class="pair-item"
+                    v-if="info.params.pairs.length > 3"
+                    @click="showAllPairs(info.params.pairs)"
+                  >
+                    ...
+                  </div>
                 </div>
               </el-form-item>
             </div>
+
             <div class="form-right" style="margin-left: 64px">
               <el-form-item
                 :label="
@@ -395,7 +410,7 @@
           </div>
         </el-form>
 
-        <div class="btn-group" style="margin-top: 30px">
+        <div class="btn-group">
           <el-button @click="close" class="btn cancle">{{
             $t("message.cancel")
           }}</el-button>
@@ -408,6 +423,11 @@
             class="btn confirm"
             >{{ $t("message.confirm") }}</el-button
           >
+        </div>
+        <div style="margin-top: 10px; display: flex; justify-content: center">
+          <el-checkbox v-model="info.isActive">
+            {{ $t("message.newStrategy.stragegyActiving") }}
+          </el-checkbox>
         </div>
       </div>
     </el-dialog>
@@ -422,6 +442,7 @@ import addTradingPairDialog from "@/components/add-trading-pair";
 import _ from "lodash";
 import { Wallet } from "@swtc/wallet";
 import { isValidCron } from "cron-validator";
+import showAllPairs from "@/components/show-all-pairs";
 
 export default {
   name: "Dialog",
@@ -553,6 +574,11 @@ export default {
     },
   },
   methods: {
+    showAllPairs(pairs) {
+      showAllPairs().show(pairs, (data) => {
+        this.info.params.pairs = _.cloneDeep(data);
+      });
+    },
     isValidCron(cron) {
       return isValidCron(cron, {
         seconds: true,

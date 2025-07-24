@@ -1,0 +1,8 @@
+.el-dialog__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .el-dialog {
+    margin: 0px !important;
+  }
+}
