@@ -1,10 +1,12 @@
 <template>
   <el-tooltip
     class="item"
-    effect="dark"
+    :effect="effect"
     :content="text"
     placement="top-start"
     offset="50"
+    trigger="click"
+    :popper-class="popperClass"
   >
     <img
       style="
@@ -34,6 +36,14 @@ export default {
   props: {
     text: {
       type: String,
+    },
+    effect: {
+      type: String,
+      default: "dark",
+    },
+    popperClass: {
+      type: String,
+      default: "",
     },
   },
   methods: {
