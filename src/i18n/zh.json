@@ -51,7 +51,7 @@
   "detail": "详情",
   "userInfo": {
     "role": "角色",
-    "account": "账户",
+    "account": "钱包地址",
     "user": "普通用户",
     "admin": "管理员",
     "name": "账户名称"
@@ -69,7 +69,7 @@
     "title": "添加账户",
     "pleaseChooseRole": "请选择角色",
     "pleaseEnterName": "请输入账户名称",
-    "pleaseEnterAddress": "请输入账户",
+    "pleaseEnterAddress": "请输入钱包地址",
     "setPermissions": "设置权限",
     "addSuccess": "添加成功"
   },
@@ -126,7 +126,7 @@
   },
   "chainInfo": {
     "name": "链名称",
-    "bip44": "编码",
+    "bip44": "bip44编码",
     "chain": "链"
   },
   "chainManage": {
@@ -344,6 +344,9 @@
     "sellAmount": "卖出数量",
     "sellPrice": "卖出价格",
     "tradingTotal": "交易额"
+  },
+  "cancelOrder": {
+    "enterOrderId": "请输入订单ID"
   },
   "deleteTask": {
     "title": "删除任务",

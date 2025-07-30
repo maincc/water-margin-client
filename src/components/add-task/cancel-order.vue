@@ -29,12 +29,12 @@
         ></el-input>
       </el-form-item>
       <el-form-item
-        :label="$t('message.projectTask.account') + ':'"
+        :label="$t('message.projectTask.orderId') + ':'"
         prop="orderId"
       >
         <el-input
           v-model="form.orderId"
-          :placeholder="$t('message.projectTask.orderId')"
+          :placeholder="$t('message.cancelOrder.enterOrderId')"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -108,6 +108,10 @@ export default {
     background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(232, 233, 234, 1);
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .comfirm-btn {
     color: rgba(255, 255, 255, 1);

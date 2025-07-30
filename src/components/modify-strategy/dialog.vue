@@ -190,7 +190,10 @@
               </el-form-item>
             </div>
 
-            <div class="form-right" style="margin-left: 64px">
+            <div
+              class="form-right"
+              style="margin-left: 64px; position: relative"
+            >
               <el-form-item
                 :label="
                   $t('message.strategyDetail.stragegyExecFrequency') + ':'
@@ -204,6 +207,23 @@
                   "
                 >
                 </el-input>
+                <div
+                  style="
+                    position: absolute;
+                    top: 0;
+                    right: -20px;
+                    height: 100%;
+                    display: flex;
+                    cursor: pointer;
+                  "
+                >
+                  <img
+                    @click="cronExplain"
+                    style="width: 14px"
+                    src="@/assets/cron-explain.svg"
+                    alt=""
+                  />
+                </div>
               </el-form-item>
               <el-form-item
                 id="input-append-white"
@@ -443,6 +463,7 @@ import _ from "lodash";
 import { Wallet } from "@swtc/wallet";
 import { isValidCron } from "cron-validator";
 import showAllPairs from "@/components/show-all-pairs";
+import cronExplainDialog from "@/components/cron-explain";
 
 export default {
   name: "Dialog",
@@ -574,6 +595,9 @@ export default {
     },
   },
   methods: {
+    cronExplain() {
+      cronExplainDialog().show();
+    },
     showAllPairs(pairs) {
       showAllPairs().show(pairs, (data) => {
         this.info.params.pairs = _.cloneDeep(data);
@@ -739,6 +763,10 @@ export default {
     border: 1px solid rgba(232, 233, 234, 1);
     font-size: 14px;
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .confirm {
     background: rgba(132, 132, 221, 1);

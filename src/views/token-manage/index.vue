@@ -21,8 +21,8 @@
       >
         <el-table-column
           prop="symbol"
-          :label="$t('message.tokenManage.token')"
-          width="150px"
+          :label="$t('message.tokenInfo.symbol')"
+          show-overflow-tooltip
         >
           <template slot-scope="scope">
             <div style="display: flex; align-items: center">
@@ -37,9 +37,26 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="name"
+          :label="$t('message.tokenInfo.name')"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <div style="display: flex; align-items: center">
+              <img
+                style="width: 20px; height: 20px"
+                :src="showTokenLogo(scope.row.logo)"
+                alt=""
+                srcset=""
+              />
+              <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="bip44"
           :label="$t('message.tokenManage.chainName')"
-          width="150px"
+          :width="150"
         >
           <template slot-scope="scope">
             <div style="display: flex; align-items: center">
@@ -56,27 +73,31 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="issuer"
-          :label="$t('message.tokenManage.issuer')"
+          prop="decimals"
+          :label="$t('message.tokenInfo.decimals')"
           show-overflow-tooltip
+          align="center"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.issuer || "- -" }}</span>
+            <span>{{ scope.row.decimals || "- -" }}</span>
           </template>
         </el-table-column>
         <el-table-column
-          prop="contract"
-          :label="$t('message.tokenManage.contract')"
+          prop="isNative"
+          :label="$t('message.tokenInfo.isNative')"
           show-overflow-tooltip
+          align="center"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.contract || "- -" }}</span>
+            <span>{{
+              scope.row.isNative ? $t("message.yes") : $t("message.no")
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
           :label="$t('message.operation')"
-          :width="120"
+          :width="150"
         >
           <template slot-scope="scope">
             <div
@@ -86,6 +107,12 @@
                 align-items: center;
               "
             >
+              <el-button
+                @click="toDetail(scope.row)"
+                type="text"
+                style="color: rgba(177, 177, 255, 1)"
+                >{{ $t("message.detail") }}</el-button
+              >
               <div style="width: 28px" v-if="!isAuthWrite">- -</div>
               <el-button
                 @click="modifyToken(scope.row)"
@@ -167,6 +194,9 @@ export default {
     ...mapGetters(["userInfo", "allChains"]),
   },
   methods: {
+    toDetail(info) {
+      this.$router.push("/tokenManage/detail/" + info._id);
+    },
     modifyToken(info) {
       modifyTokenDialog().show(info, async (data) => {
         try {
@@ -246,14 +276,14 @@ export default {
     },
     showChainLogo(str) {
       try {
-        const chain = this.allChains.find((item) => item.bip44 === str);
+        const chain = this.allChains.find((item) => item.bip44 == str);
         return require(`@/assets/chains/${chain?.logo}`);
       } catch (error) {
         return require(`@/assets/chains/default.png`);
       }
     },
     showChainName(str) {
-      const chain = this.allChains.find((item) => item.bip44 === str);
+      const chain = this.allChains.find((item) => item.bip44 == str);
       return chain ? chain.name : "- -";
     },
   },

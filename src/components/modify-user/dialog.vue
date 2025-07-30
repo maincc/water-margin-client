@@ -13,11 +13,11 @@
             style="display: flex"
           >
             <div class="disable-div">
-              <span style="margin-left: 20px">{{
-                form.role == AccountRole.Admin
+              {{
+                form.role == AccountRole.admin
                   ? $t("message.userInfo.admin")
                   : $t("message.userInfo.user")
-              }}</span>
+              }}
             </div>
           </el-form-item>
 
@@ -40,7 +40,7 @@
             style="display: flex"
           >
             <div class="disable-div">
-              <span style="margin-left: 20px">{{ form.address }}</span>
+              {{ form.address }}
             </div>
           </el-form-item>
 
@@ -226,6 +226,7 @@ export default {
   },
   methods: {
     show(info, fun) {
+      console.log(this.AccountRole, AccountRole);
       this.info = info;
       this.fun = fun;
       this.visible = true;
@@ -361,9 +362,13 @@ export default {
 }
 .disable-div {
   height: 36px;
-  width: 100%;
+  width: calc(100% - 20px);
+  padding-left: 20px;
   background: rgba(240, 240, 240, 1);
   border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .checkbox {
   border: 1px solid rgba(232, 233, 234, 1);
@@ -400,6 +405,10 @@ export default {
     border: 1px solid rgba(232, 233, 234, 1);
     font-size: 14px;
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .confirm {
     // background: rgba(132, 132, 221, 1);

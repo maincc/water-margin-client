@@ -35,7 +35,7 @@
             style="display: flex"
           >
             <el-input
-              v-model="form.name"
+              v-model.trim="form.name"
               :placeholder="$t('message.addToken.pleaseEnterName')"
             ></el-input>
           </el-form-item>
@@ -47,7 +47,7 @@
             style="display: flex"
           >
             <el-input
-              v-model="form.symbol"
+              v-model.trim="form.symbol"
               :placeholder="$t('message.addToken.pleaseEnterSymbol')"
             ></el-input>
           </el-form-item>
@@ -60,7 +60,8 @@
           >
             <el-input
               type="number"
-              v-model="form.decimals"
+              v-model.trim="form.decimals"
+              @input="handleInput"
               :placeholder="$t('message.addToken.pleaseEnterDecimals')"
             ></el-input>
           </el-form-item>
@@ -73,7 +74,7 @@
               style="display: flex"
             >
               <el-input
-                v-model="form.issuer"
+                v-model.trim="form.issuer"
                 :placeholder="$t('message.addToken.pleaseEnterIssuer')"
               ></el-input>
             </el-form-item>
@@ -87,7 +88,7 @@
               style="display: flex"
             >
               <el-input
-                v-model="form.contract"
+                v-model.trim="form.contract"
                 :placeholder="$t('message.addToken.pleaseEnterContract')"
               ></el-input>
             </el-form-item>
@@ -99,7 +100,7 @@
               style="display: flex"
             >
               <el-input
-                v-model="form.mirrorName"
+                v-model.trim="form.mirrorName"
                 :placeholder="$t('message.addToken.pleaseEnterMirrorName')"
               ></el-input>
             </el-form-item>
@@ -111,7 +112,7 @@
               style="display: flex"
             >
               <el-input
-                v-model="form.mirrorIssuer"
+                v-model.trim="form.mirrorIssuer"
                 :placeholder="$t('message.addToken.pleaseEnterMirrorIssuer')"
               ></el-input>
             </el-form-item>
@@ -220,7 +221,7 @@ export default {
           {
             validator: (rule, value, callback) => {
               if (value) {
-                if (web3.utils.isAddress(value)) {
+                if (Wallet.isValidAddress(value)) {
                   callback();
                 } else {
                   callback(this.$t("message.errorTip.errorMirrorIssuer"));
@@ -279,7 +280,7 @@ export default {
         ) {
           if (
             web3.utils.isAddress(contract) &&
-            web3.utils.isAddress(mirrorIssuer)
+            Wallet.isValidAddress(mirrorIssuer)
           ) {
             if (this.isModified()) {
               return true;
@@ -295,6 +296,13 @@ export default {
     },
   },
   methods: {
+    handleInput(value) {
+      // 1. 移除所有非数字字符（包括小数点、负号等）
+      const filteredValue = value.replace(/[^\d]/g, "");
+
+      // 2. 更新模型数据（确保始终是整数）
+      this.form.decimals = filteredValue === "" ? null : Number(filteredValue);
+    },
     isModified() {
       const {
         bip44,
@@ -457,6 +465,10 @@ export default {
     border: 1px solid rgba(232, 233, 234, 1);
     font-size: 14px;
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .confirm {
     background: rgba(132, 132, 221, 1);

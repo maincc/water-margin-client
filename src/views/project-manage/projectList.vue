@@ -19,12 +19,6 @@
         >
         </el-table-column>
         <el-table-column
-          prop="createDate"
-          :label="$t('message.projectInfo.time')"
-          show-overflow-tooltip
-        >
-        </el-table-column>
-        <el-table-column
           prop="type"
           :label="$t('message.projectInfo.type')"
           width="100px"
@@ -41,27 +35,31 @@
         >
         </el-table-column>
         <el-table-column
-          prop="strategyId"
-          :label="$t('message.projectInfo.strategyId')"
+          prop="createDate"
+          :label="$t('message.projectInfo.time')"
           show-overflow-tooltip
+          :width="180"
         >
+          <template slot-scope="scope">
+            {{ handleTime(scope.row.createDate) }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="profit"
           :label="$t('message.projectInfo.profit')"
+          align="center"
+          :width="100"
         >
           <template slot-scope="scope">
-            {{
-              scope.row.profit
-                ? scope.row.profit + " " + $t("message.USDT")
-                : "- -"
-            }}
+            {{ scope.row.profit || "- -" }}
           </template>
         </el-table-column>
         <el-table-column
           prop="type"
           :label="$t('message.projectInfo.status')"
+          align="center"
           show-overflow-tooltip
+          :width="140"
         >
           <template slot-scope="scope">
             {{ zhStatus(scope.row.status) }}
@@ -112,6 +110,7 @@ import { PAGE, SIZE } from "@/js/constant";
 import { mapGetters } from "vuex";
 import EmptyTableContent from "@/components/empty-table-content";
 import { fetchProjectList } from "@/js/api/v1/project";
+import dayjs from "dayjs";
 
 export default {
   name: "projectList",
@@ -142,6 +141,11 @@ export default {
     ...mapGetters(["userInfo"]),
   },
   methods: {
+    handleTime(time) {
+      const date = dayjs(time);
+      const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
+      return formattedDate;
+    },
     toDetail(info) {
       this.$router.push("/projectManage/detail/" + info._id);
     },

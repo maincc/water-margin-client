@@ -120,7 +120,6 @@ export default {
     }
   }
   .view-content {
-    background: red;
     flex: 1;
     background: rgba(24, 31, 35, 1);
     .title {

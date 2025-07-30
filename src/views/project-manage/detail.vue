@@ -33,7 +33,7 @@
           </div>
           <div style="margin-top: 16px" class="info-content-item">
             <div class="label">{{ $t("message.projectInfo.time") }}:</div>
-            <div class="value">{{ zhType(info.createDate) }}</div>
+            <div class="value">{{ handleTime(info.createDate) }}</div>
           </div>
           <div style="margin-top: 16px" class="info-content-item">
             <div class="label">{{ $t("message.projectInfo.strategyId") }}:</div>
@@ -141,6 +141,7 @@
                 offset="20"
                 :content="scope.row.msg"
                 placement="top"
+                popper-class="custom-tooltip"
               >
                 <img src="@/assets/fail-explain.svg" alt="" srcset="" />
               </el-tooltip>
@@ -269,6 +270,7 @@ import { mapGetters } from "vuex";
 import EmptyTableContent from "@/components/empty-table-content";
 import { Loading } from "element-ui";
 import updateProjectStatus from "@/components/update-project-status";
+import dayjs from "dayjs";
 
 export default {
   name: "projectDetail",
@@ -323,6 +325,11 @@ export default {
     EmptyTableContent,
   },
   methods: {
+    handleTime(time) {
+      const date = dayjs(time);
+      const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
+      return formattedDate;
+    },
     updateStatus() {
       updateProjectStatus().show(async () => {
         const inst = Loading.service({
@@ -331,10 +338,10 @@ export default {
           background: "rgba(0, 0, 0, 0.7)",
         });
         try {
-          const res = updateProject(this.userInfo.address, this.id, {
+          const res = await updateProject(this.userInfo.address, this.id, {
             status: "handled",
           });
-          if (res.isSuccess() || res.code == 0) {
+          if (res.isSuccess()) {
             this.$message.success(this.$t("message.modifyChain.modifySuccess"));
             const infoRes = await fetchProjectById(
               this.userInfo.address,
@@ -449,6 +456,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .custom-tooltip {
+  max-width: 300px !important;
+  word-wrap: break-word !important;
+  white-space: normal !important;
+}
 .project-detail {
   margin: 46px 20px 0px;
   height: calc(100% - 92px);

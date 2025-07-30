@@ -1,0 +1,7 @@
+.el-radio__input.is-checked+.el-radio__label {
+  color: #606266;
+}
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: rgba(132, 132, 221, 1);
+  background: rgba(132, 132, 221, 1);
+}

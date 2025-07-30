@@ -65,6 +65,9 @@
           :label="$t('message.strategyInfo.createDate')"
           show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            {{ handleTime(scope.row.createDate) }}
+          </template>
         </el-table-column>
         <el-table-column prop="type" :label="$t('message.strategyInfo.type')">
           <template slot-scope="scope">
@@ -149,6 +152,7 @@ import {
   strategyStatusOptions,
 } from "@/js/constant/strategy";
 import modifyStrategyDialog from "@/components/modify-strategy";
+import dayjs from "dayjs";
 
 export default {
   name: "strategyList",
@@ -185,6 +189,11 @@ export default {
     ...mapGetters(["userInfo", "allChains"]),
   },
   methods: {
+    handleTime(time) {
+      const date = dayjs(time);
+      const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
+      return formattedDate;
+    },
     modifyStrategy(info) {
       modifyStrategyDialog().show(info, async (data) => {
         try {
