@@ -11,10 +11,7 @@
           label-width="148px"
           class="demo-ruleForm"
         >
-          <el-form-item
-            :label="$t('message.chainInfo.chain') + ':'"
-            prop="name"
-          >
+          <el-form-item :label="$t('message.chainInfo.name') + ':'" prop="name">
             <el-input
               v-model="form.name"
               :placeholder="$t('message.addChain.pleaseEnterName')"
@@ -142,6 +139,10 @@ export default {
     border: 1px solid rgba(232, 233, 234, 1);
     font-size: 14px;
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .confirm {
     background: rgba(132, 132, 221, 1);

@@ -11,3 +11,9 @@
 .el-popper[x-placement^="bottom"] .popper__arrow {
   border-bottom-color: #dce0e3;
 }
+
+.el-tooltip__popper {
+  max-width: 600px !important;
+  word-wrap: break-word !important;
+  white-space: normal !important;
+}

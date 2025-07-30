@@ -1,7 +1,8 @@
 .el-form-item {
   width: 100%;
+  margin-bottom: 20px;
   .el-form-item__label {
-    width: 148px;
+    min-width: 148px;
     text-align: left;
     font-size: 14px;
     font-weight: 400;
@@ -9,24 +10,26 @@
   }
   .el-form-item__content {
     flex: 1;
+    min-width: 0;
   }
 }
 
-#new-handicap {
+#new-handicap, #new-project {
+  .el-input__inner {
+    background: rgba(13, 26, 33, 1);
+    border: 1px solid rgba(66, 70, 90, 1);
+    border-radius: 6px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1)
+  }
+  .el-input__inner::placeholder {
+    color: rgba(157, 169, 181, 1);
+  }
   .el-form-item {
     .el-form-item__label {
       width: 170px;
       font-size: 14px;
       color: rgba(255, 255, 255, 1);
-    }
-    .el-form-item__content {
-      .el-input__inner {
-        background: rgba(13, 26, 33, 1);
-        border: 1px solid rgba(66, 70, 90, 1);
-        border-radius: 6px;
-        font-size: 14px;
-        color: rgba(157, 169, 181, 1);
-      }
     }
   }
 }

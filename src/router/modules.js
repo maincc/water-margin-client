@@ -24,6 +24,15 @@ const routers = [
       icon: require("@/assets/menus/token-manage.svg"),
     },
   },
+  {
+    path: "/tokenManage/detail/:id",
+    name: "tokenDetail",
+    module: "token",
+    component: _import("token-manage/detail"),
+    meta: {
+      parentMenu: "TokenManage",
+    },
+  },
 
   {
     path: "/strategyManage/newStrategy",

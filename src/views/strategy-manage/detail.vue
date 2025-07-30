@@ -45,7 +45,7 @@
           <div class="info-left">
             {{ $t("message.strategyInfo.createDate") }}
           </div>
-          <div class="info-right">{{ info.createDate }}</div>
+          <div class="info-right">{{ handleTime(info.createDate) }}</div>
         </div>
         <div v-if="info.params">
           <div class="info-item">
@@ -213,6 +213,7 @@ import ExplainButton from "@/components/explain-button";
 import strategyActivateDialog from "@/components/strategy-activate";
 import strategyBanDialog from "@/components/strategy-ban";
 import { Loading } from "element-ui";
+import dayjs from "dayjs";
 
 export default {
   name: "StrategyDetail",
@@ -270,6 +271,11 @@ export default {
     },
   },
   methods: {
+    handleTime(time) {
+      const date = dayjs(time);
+      const formattedDate = date.format("YYYY-MM-DD HH:mm:ss");
+      return formattedDate;
+    },
     strategyBan() {
       strategyBanDialog().show(async () => {
         const data = Object.assign({}, this.info, {

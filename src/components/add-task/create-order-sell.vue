@@ -249,6 +249,10 @@ export default {
     background: rgba(255, 255, 255, 1);
     border: 1px solid rgba(232, 233, 234, 1);
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .comfirm-btn {
     background: rgba(216, 64, 92, 1);

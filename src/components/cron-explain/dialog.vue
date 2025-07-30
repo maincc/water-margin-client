@@ -170,7 +170,7 @@
             2005年每天10点15分触发
           </span>
         </div>
-        <div>
+        <div style="margin-bottom: 30px">
           Cron表达式对特殊字符的大小写不敏感，对代表星期的缩写英文大小写也不敏感。
         </div>
       </div>
@@ -261,6 +261,10 @@ export default {
     border: 1px solid rgba(232, 233, 234, 1);
     font-size: 14px;
     color: rgba(81, 86, 95, 1);
+    &:hover {
+      color: rgba(127, 127, 227, 1);
+      border: 1px solid rgba(132, 132, 221, 1);
+    }
   }
   .confirm {
     background: rgba(132, 132, 221, 1);

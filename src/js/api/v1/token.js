@@ -74,3 +74,18 @@ export const modifyToken = async (address, id, data) => {
   });
   return res;
 };
+
+/**
+ * 根据交易所ID查询一个交易所
+ *
+ * @returns
+ */
+export const fetchTokenById = async (address, id) => {
+  const res = await fetch({
+    url: "/v1/api/token/detail/" + id,
+    method: "get",
+    tk: true,
+    signer: address,
+  });
+  return res;
+};

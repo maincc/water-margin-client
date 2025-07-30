@@ -1,6 +1,11 @@
 .el-input__inner {
   border: 1px solid rgba(232, 233, 234, 1);
+  color: rgba(43, 44, 47, 1);
   border-radius: 6px;
+}
+
+.el-input__inner:focus {
+  border-color: rgba(132, 132, 221, 1);
 }
 
 input[type="text"] {
@@ -42,3 +47,8 @@ input[type="text"] {
     border: 1px solid rgba(66, 70, 90, 1);
   }
 }
+
+.el-range-editor.is-active, .el-range-editor.is-active:hover, .el-select .el-input.is-focus .el-input__inner {
+  border-color: rgba(132, 132, 221, 1);
+}
+
