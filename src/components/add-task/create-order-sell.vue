@@ -33,47 +33,51 @@
         :label="$t('message.strategyDetail.tradingPairs') + ':'"
       >
         <div class="pair-group" id="pair-group">
-          <el-select
-            style="width: 135px"
-            v-model="form.base"
-            :placeholder="$t('message.token')"
-            popper-class="minimal-token-select"
-            :popper-append-to-body="false"
-            @change="
-              form.baseId = selectTokens.find(
-                (item) => item.symbol === form.base
-              )._id
-            "
-          >
-            <el-option
-              v-for="item in selectTokens"
-              :key="item._id"
-              :label="item.symbol"
-              :value="item.symbol"
+          <div id="pair-group-left">
+            <el-select
+              style="width: 135px"
+              v-model="form.base"
+              :placeholder="$t('message.token')"
+              popper-class="minimal-token-select"
+              :popper-append-to-body="false"
+              @change="
+                form.baseId = selectTokens.find(
+                  (item) => item.symbol === form.base
+                )._id
+              "
             >
-            </el-option>
-          </el-select>
+              <el-option
+                v-for="item in selectTokens"
+                :key="item._id"
+                :label="item.symbol"
+                :value="item.symbol"
+              >
+              </el-option>
+            </el-select>
+          </div>
           <img style="width: 20px" src="@/assets/pairLogo.svg" alt="" />
-          <el-select
-            style="width: 135px"
-            v-model="form.counter"
-            :placeholder="$t('message.token')"
-            popper-class="minimal-token-select"
-            :popper-append-to-body="false"
-            @change="
-              form.counterId = selectTokens.find(
-                (item) => item.symbol === form.counter
-              )._id
-            "
-          >
-            <el-option
-              v-for="item in selectTokens"
-              :key="item._id"
-              :label="item.symbol"
-              :value="item.symbol"
+          <div id="pair-group-right">
+            <el-select
+              style="width: 135px"
+              v-model="form.counter"
+              :placeholder="$t('message.token')"
+              popper-class="minimal-token-select"
+              :popper-append-to-body="false"
+              @change="
+                form.counterId = selectTokens.find(
+                  (item) => item.symbol === form.counter
+                )._id
+              "
             >
-            </el-option>
-          </el-select>
+              <el-option
+                v-for="item in selectTokens"
+                :key="item._id"
+                :label="item.symbol"
+                :value="item.symbol"
+              >
+              </el-option>
+            </el-select>
+          </div>
         </div>
       </el-form-item>
       <el-form-item

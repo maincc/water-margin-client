@@ -1,5 +1,5 @@
 <template>
-  <div id="add-chain">
+  <div id="modify-strategy">
     <el-dialog :visible.sync="visible" width="1000px" @close="resetForm">
       <div slot="title" class="title">
         {{ $t("message.modifyStrategy.title") }}
@@ -29,40 +29,102 @@
                 ></el-input>
               </el-form-item>
               <el-form-item
-                :label="$t('message.strategyDetail.rivalExchange') + ':'"
-                prop="params.exchange"
-              >
-                <el-select
-                  style="width: 100%"
-                  v-model="info.params.exchange"
-                  :placeholder="$t('message.newStrategy.pleaseSelectExchange')"
-                  :popper-append-to-body="false"
-                >
-                  <el-option
-                    v-for="item in exchangeOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                :label="$t('message.strategyDetail.rivalExchangeAccount') + ':'"
-                prop="params.exchangeAccount"
+                id="input-append-white"
+                :label="$t('message.strategyDetail.pairExecInterval') + ':'"
+                prop="params.pairExecInterval"
               >
                 <el-input
-                  v-model="info.params.exchangeAccount"
+                  type="number"
+                  v-model.number="info.params.pairExecInterval"
                   :placeholder="
-                    $t('message.newStrategy.pleaseEnterExchangeAccount')
+                    $t('message.newStrategy.pleaseEnterPairExecInterval')
                   "
-                ></el-input>
+                >
+                  <template #append>
+                    <div
+                      style="
+                        width: 38px;
+                        display: flex;
+                        justify-content: center;
+                      "
+                    >
+                      {{ $t("message.second") }}
+                    </div>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item
+                id="input-append-white"
+                :label="$t('message.strategyDetail.gapThreshold') + ':'"
+                prop="params.gapThreshold"
+              >
+                <template #label>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      position: relative;
+                    "
+                  >
+                    <div class="explain-css">
+                      <ExplainButton
+                        :text="$t('message.strategyDetail.gapThresholdExplain')"
+                        :effect="'light'"
+                        :popperClass="'explain-light'"
+                      ></ExplainButton>
+                    </div>
+                    <span
+                      >{{ $t("message.strategyDetail.gapThreshold") }}:</span
+                    >
+                  </div>
+                </template>
+                <el-input
+                  type="number"
+                  v-model="info.params.gapThreshold"
+                  :placeholder="
+                    $t('message.newStrategy.pleaseEnterGapThreshold')
+                  "
+                >
+                  <template #append>
+                    <div
+                      style="
+                        width: 38px;
+                        display: flex;
+                        justify-content: center;
+                      "
+                    >
+                      %
+                    </div>
+                  </template>
+                </el-input>
               </el-form-item>
               <el-form-item
                 id="input-append-white"
                 :label="$t('message.strategyDetail.burrThreshold') + ':'"
                 prop="params.burrThreshold"
               >
+                <template #label>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      position: relative;
+                    "
+                  >
+                    <div class="explain-css">
+                      <ExplainButton
+                        :text="
+                          $t('message.strategyDetail.burrThresholdExplain')
+                        "
+                        :effect="'light'"
+                        :popperClass="'explain-light'"
+                      ></ExplainButton>
+                    </div>
+                    <span
+                      >{{ $t("message.strategyDetail.burrThreshold") }}:</span
+                    >
+                  </div>
+                </template>
                 <el-input
                   type="number"
                   v-model="info.params.burrThreshold"
@@ -88,6 +150,28 @@
                 :label="$t('message.strategyDetail.hedgeThreshold') + ':'"
                 prop="params.hedgeThreshold"
               >
+                <template #label>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      position: relative;
+                    "
+                  >
+                    <div class="explain-css">
+                      <ExplainButton
+                        :text="
+                          $t('message.strategyDetail.hedgeThresholdExplain')
+                        "
+                        :effect="'light'"
+                        :popperClass="'explain-light'"
+                      ></ExplainButton>
+                    </div>
+                    <span
+                      >{{ $t("message.strategyDetail.hedgeThreshold") }}:</span
+                    >
+                  </div>
+                </template>
                 <el-input
                   type="number"
                   v-model="info.params.hedgeThreshold"
@@ -113,6 +197,24 @@
                 :label="$t('message.strategyDetail.microOffset') + ':'"
                 prop="params.microOffset"
               >
+                <template #label>
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      position: relative;
+                    "
+                  >
+                    <div class="explain-css">
+                      <ExplainButton
+                        :text="$t('message.strategyDetail.microOffsetExplain')"
+                        :effect="'light'"
+                        :popperClass="'explain-light'"
+                      ></ExplainButton>
+                    </div>
+                    <span>{{ $t("message.strategyDetail.microOffset") }}:</span>
+                  </div>
+                </template>
                 <el-input
                   type="number"
                   v-model="info.params.microOffset"
@@ -143,7 +245,9 @@
                       src="@/assets/add.svg"
                       alt=""
                     />
-                    <div>{{ $t("message.newStrategy.addTradingPair") }}</div>
+                    <div style="color: rgba(127, 127, 227, 1)">
+                      {{ $t("message.newStrategy.addTradingPair") }}
+                    </div>
                   </div>
                 </el-button>
                 <div v-if="info.params.pairs.length > 0" class="show-pairs-div">
@@ -180,7 +284,7 @@
                       width: 42px;
                       cursor: pointer;
                     "
-                    class="pair-item"
+                    class="pair-item select-item"
                     v-if="info.params.pairs.length > 3"
                     @click="showAllPairs(info.params.pairs)"
                   >
@@ -194,6 +298,36 @@
               class="form-right"
               style="margin-left: 64px; position: relative"
             >
+              <el-form-item
+                :label="$t('message.strategyDetail.rivalExchange') + ':'"
+                prop="params.exchange"
+              >
+                <el-select
+                  style="width: 100%"
+                  v-model="info.params.exchange"
+                  :placeholder="$t('message.newStrategy.pleaseSelectExchange')"
+                  :popper-append-to-body="false"
+                >
+                  <el-option
+                    v-for="item in exchangeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item
+                :label="$t('message.strategyDetail.rivalExchangeAccount') + ':'"
+                prop="params.exchangeAccount"
+              >
+                <el-input
+                  v-model="info.params.exchangeAccount"
+                  :placeholder="
+                    $t('message.newStrategy.pleaseEnterExchangeAccount')
+                  "
+                ></el-input>
+              </el-form-item>
               <el-form-item
                 :label="
                   $t('message.strategyDetail.stragegyExecFrequency') + ':'
@@ -224,56 +358,6 @@
                     alt=""
                   />
                 </div>
-              </el-form-item>
-              <el-form-item
-                id="input-append-white"
-                :label="$t('message.strategyDetail.pairExecInterval') + ':'"
-                prop="params.pairExecInterval"
-              >
-                <el-input
-                  type="number"
-                  v-model.number="info.params.pairExecInterval"
-                  :placeholder="
-                    $t('message.newStrategy.pleaseEnterPairExecInterval')
-                  "
-                >
-                  <template #append>
-                    <div
-                      style="
-                        width: 38px;
-                        display: flex;
-                        justify-content: center;
-                      "
-                    >
-                      {{ $t("message.second") }}
-                    </div>
-                  </template>
-                </el-input>
-              </el-form-item>
-              <el-form-item
-                id="input-append-white"
-                :label="$t('message.strategyDetail.gapThreshold') + ':'"
-                prop="params.gapThreshold"
-              >
-                <el-input
-                  type="number"
-                  v-model="info.params.gapThreshold"
-                  :placeholder="
-                    $t('message.newStrategy.pleaseEnterGapThreshold')
-                  "
-                >
-                  <template #append>
-                    <div
-                      style="
-                        width: 38px;
-                        display: flex;
-                        justify-content: center;
-                      "
-                    >
-                      %
-                    </div>
-                  </template>
-                </el-input>
               </el-form-item>
 
               <el-form-item
@@ -464,6 +548,7 @@ import { Wallet } from "@swtc/wallet";
 import { isValidCron } from "cron-validator";
 import showAllPairs from "@/components/show-all-pairs";
 import cronExplainDialog from "@/components/cron-explain";
+import ExplainButton from "@/components/explain-button";
 
 export default {
   name: "Dialog",
@@ -534,6 +619,9 @@ export default {
         ],
       },
     };
+  },
+  components: {
+    ExplainButton,
   },
   computed: {
     ...mapGetters(["userInfo", "allExchanges"]),
@@ -686,7 +774,7 @@ export default {
 </script>
 
 <style lang="scss">
-#add-chain {
+#modify-strategy {
   .el-dialog {
     border-radius: 30px;
     .el-dialog__header {
@@ -701,6 +789,10 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.explain-css {
+  position: absolute;
+  left: -25px;
+}
 .title {
   display: flex;
   justify-content: center;
@@ -739,6 +831,12 @@ export default {
     background: rgba(250, 250, 250, 1);
     display: flex;
     flex-wrap: wrap;
+    .select-item {
+      &:hover {
+        background: rgba(242, 242, 252, 1) !important;
+        color: rgba(127, 127, 227, 1) !important;
+      }
+    }
     .pair-item {
       height: 26px;
       border-radius: 6px;

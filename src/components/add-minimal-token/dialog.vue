@@ -42,7 +42,7 @@
           </el-form-item>
         </el-form>
 
-        <div class="btn-group" style="margin-top: 30px">
+        <div class="btn-group" style="margin-top: 80px">
           <el-button @click="close" class="btn cancle">{{
             $t("message.cancel")
           }}</el-button>

@@ -1,7 +1,13 @@
-.explain-tooltip {
-  margin-left: -8px !important;
+.explain-light {
+  border: 1px solid rgba(232, 233, 234, 1) !important;
+  color: rgba(43, 44, 47, 1);
+  .popper__arrow {
+    border-top-color: rgba(232, 233, 234, 1) !important;
+  }
 }
 
-.explain-tooltip .popper__arrow {
-  left: 10px !important;
+.el-tooltip__popper {
+  max-width: 600px !important;
+  word-wrap: break-word !important;
+  white-space: normal !important;
 }

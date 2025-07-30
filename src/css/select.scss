@@ -22,6 +22,30 @@
   }
 }
 
+.trading-pair-select .el-select-dropdown__list {
+  width: 458px !important;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  .el-select-dropdown__item {
+    margin: 5px;
+    width: 90px;
+    height: 34px;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 2px;
+    background: rgba(247, 247, 247, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      font-weight: 600;
+      background: rgba(132, 132, 221, 0.1);
+      color: rgba(127, 127, 227, 1);
+    }
+  }
+}
+
 #pair-group-left {
   .el-select-dropdown {
     position: absolute !important;
@@ -110,4 +134,8 @@
 
 .el-select-dropdown__item.selected {
   color: rgba(127, 127, 227, 1);
+}
+
+.el-select-dropdown__wrap {
+  max-height: 186px !important;
 }

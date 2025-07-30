@@ -7,45 +7,53 @@
       <div class="content">
         <div>{{ $t("message.addTradingPair.selectTradingPair") }}:</div>
         <div class="select-div" style="margin-top: 20px">
-          <el-select
-            v-model="pair[0]"
-            :placeholder="$t('message.addMinimalToken.pleaseSelectToken')"
-            style="width: 100%"
-            popper-class="minimal-token-select"
-            :popper-append-to-body="false"
-          >
-            <el-option
-              v-for="item in selectTokens"
-              :key="item.symbol"
-              :label="item.symbol"
-              :value="item.symbol"
+          <div id="pair-group-left" style="width: 100%">
+            <el-select
+              v-model="pair[0]"
+              :placeholder="$t('message.addMinimalToken.pleaseSelectToken')"
+              style="width: 100%"
+              popper-class="trading-pair-select"
+              :popper-append-to-body="false"
             >
-            </el-option>
-          </el-select>
+              <el-option
+                v-for="item in selectTokens"
+                :key="item.symbol"
+                :label="item.symbol"
+                :value="item.symbol"
+              >
+              </el-option>
+            </el-select>
+          </div>
           <img style="margin: 0 10px" src="@/assets/pairLogo.svg" alt="" />
-          <el-select
-            v-model="pair[1]"
-            :placeholder="$t('message.addMinimalToken.pleaseSelectToken')"
-            style="width: 100%"
-            popper-class="minimal-token-select"
-            :popper-append-to-body="false"
-          >
-            <el-option
-              v-for="item in selectTokens"
-              :key="item.symbol"
-              :label="item.symbol"
-              :value="item.symbol"
+          <div id="pair-group-right" style="width: 100%">
+            <el-select
+              v-model="pair[1]"
+              :placeholder="$t('message.addMinimalToken.pleaseSelectToken')"
+              style="width: 100%"
+              popper-class="trading-pair-select"
+              :popper-append-to-body="false"
             >
-            </el-option>
-          </el-select>
+              <el-option
+                v-for="item in selectTokens"
+                :key="item.symbol"
+                :label="item.symbol"
+                :value="item.symbol"
+              >
+              </el-option>
+            </el-select>
+          </div>
         </div>
 
-        <div class="btn-group" style="margin-top: 30px">
+        <div class="btn-group" style="margin-top: 140px">
+          <el-button @click="close" class="btn cancle">{{
+            $t("message.cancel")
+          }}</el-button>
           <el-button
             type="primary"
             :disabled="!isConfirm"
             :loading="loading"
             @click="confirm"
+            style="margin-left: 60px"
             class="btn confirm"
             >{{ $t("message.confirm") }}</el-button
           >

@@ -1,6 +1,6 @@
 <template>
   <div class="index-content">
-    <div class="content" style="margin-top: 160px; margin-left: 160px">
+    <div class="content" style="margin-top: 10%; margin-left: 10%">
       <div class="title">{{ $t("message.indexContent.title") }}</div>
       <div class="introduce" style="margin-top: 20px">
         {{ $t("message.indexContent.introduce") }}
