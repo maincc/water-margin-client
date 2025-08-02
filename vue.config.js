@@ -18,4 +18,9 @@ module.exports = defineConfig({
       },
     },
   },
+  devServer: {
+    client: {
+      overlay: false, //  禁用浏览器控制台报错
+    },
+  },
 });
